@@ -27,6 +27,7 @@ public:
 private:
 	string word_;
 	friend class Line;
+	friend class Paragraph;
 };
 
 #endif

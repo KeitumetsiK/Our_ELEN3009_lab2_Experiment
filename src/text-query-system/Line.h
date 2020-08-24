@@ -20,6 +20,7 @@ public:
 
 private:
     string line_;
+    friend class Paragraph;
 
 };
 
