@@ -16,6 +16,8 @@ public:
 	bool contains(const Word& search_word) const;
 
 private:
+    string line_ = "";
+    friend class Paragraph;
 
 };
 
