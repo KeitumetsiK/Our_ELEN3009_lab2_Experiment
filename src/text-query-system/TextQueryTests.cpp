@@ -111,33 +111,62 @@ TEST_CASE("Word which is not queryable cannot be found") {
 
 // ------------- Tests for Paragraph ----------------
 
-//TEST_CASE("Word cannot be found in empty Paragraph") {
-//}
+TEST_CASE("Word cannot be found in empty Paragraph") {
+	Paragraph paragraph;
+	auto [contains_, vector_] = paragraph.contains(Word{"Stop"});
+	CHECK_FALSE(contains_);
+}
 //
-//TEST_CASE("Word not present in Paragraph cannot be found") {
-//}
+TEST_CASE("Word not present in Paragraph cannot be found") {
+	Paragraph paragraph;
+	paragraph.addLine(Line{"He wanted to bring peace to his kingdom."});
+	paragraph.addLine(Line{"War does not bring anything good to the common people."});
+	paragraph.addLine(Line{"It only brings sorrow and dismay."});
+	auto [contains_, vector_] = paragraph.contains(Word{"Stop"});
+	CHECK_FALSE(contains_);
+}
 //
-//TEST_CASE("Line number of a Word appearing once in Paragraph is returned") {
-//}
+TEST_CASE("Line number of a Word appearing once in Paragraph is returned") {
+    Paragraph paragraph;
+	paragraph.addLine(Line{"He wanted to bring peace to his kingdom."});
+	paragraph.addLine(Line{"War does not bring anything good to the common people."});
+	paragraph.addLine(Line{"It only brings sorrow and dismay."});
+	auto [contains_, vector_] = paragraph.contains(Word{"common"});
+    CHECK(vector<int>{2} == vector_);
+
+}
+
 //
-//TEST_CASE("Line numbers of a Word appearing in multiple Lines of a Paragraph is returned") {
-//}
+TEST_CASE("Line numbers of a Word appearing in multiple Lines of a Paragraph is returned") {
+    Paragraph paragraph;
+	paragraph.addLine(Line{"He wanted to bring peace to his people."});
+	paragraph.addLine(Line{"War does not bring anything good to the common people."});
+	paragraph.addLine(Line{"It only brings sorrow and dismay."});
+	auto [contains_, vector_] = paragraph.contains(Word{"people"});
+	CHECK(vector<int>{1,2} == vector_);
+}
 //
-//TEST_CASE("Line numbers returned account for an empty Line") {
+TEST_CASE("Line numbers returned account for an empty Line") {
 //// If the first line of the paragraph is empty, and the word being searched for
 //// is on the second line, the vector returned should be: [2]
-//}
+    Paragraph paragraph;
+	paragraph.addLine(Line{""});
+	paragraph.addLine(Line{"War does not bring anything good to the common people."});
+	paragraph.addLine(Line{"It only brings sorrow and dismay."});
+	auto [contains_, vector_] = paragraph.contains(Word{"common"});
+    CHECK(vector<int>{2} == vector_);
+}
 //
 //// Integration test - both Paragraph and File Reader are tested together
-//TEST_CASE("File can be read into Paragraph and successfully searched") {
+TEST_CASE("File can be read into Paragraph and successfully searched") {
 //	// make sure that alice.txt is in the right location for this to work!
 //	// it must be in the same directory as the executable
-//	auto filereader = FileReader{"alice.txt"};
-//	auto paragraph = Paragraph{};
-//	filereader.readFileInto(paragraph);
+	auto filereader = FileReader{"alice.txt"};
+	auto paragraph = Paragraph{};
+	filereader.readFileInto(paragraph);
 //
-//	auto[found, line_numbers] = paragraph.contains(Word{"Daddy"});
+	auto[found, line_numbers] = paragraph.contains(Word{"Daddy"});
 //
-//	CHECK(found);
-//	CHECK(vector<int>{1,4,6} == line_numbers);
-//}
+	CHECK(found);
+	CHECK(vector<int>{1,4,6} == line_numbers);
+}
