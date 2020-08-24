@@ -25,6 +25,10 @@ public:
 
 private:
 	string word_;
+	void punctuationIgnore(string& word);
+	void checkSpace(string& word);
+	friend class Line;
+	friend class Paragraph;
 };
 
 #endif

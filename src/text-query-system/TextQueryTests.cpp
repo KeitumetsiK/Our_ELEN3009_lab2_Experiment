@@ -10,6 +10,7 @@ const auto PUNCTUATION = "~`!@#$%^&*()-_+={}[]\\|:;'<>?,./\""s;
 const auto UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"s;
 const auto LOWERCASE = "abcdefghijklmnopqrstuvwxyz"s;
 const auto MIN_SIZE_FOR_QUERY = 3;
+const auto SMALL_SIZE_FOR_QUERY = 2;
 
 // ------------- Tests for Word ----------------
 
@@ -33,34 +34,37 @@ TEST_CASE("Non-identical Words are not equal") {
 
 // --------
 
-//TEST_CASE("Case is ignored when comparing Words") {
-//	CHECK(Word{LOWERCASE} == Word{UPPERCASE});
-//}
+TEST_CASE("Case is ignored when comparing Words") {
+	CHECK(Word{LOWERCASE} == Word{UPPERCASE});
+}
 //
-//TEST_CASE("Punctuation is ignored when comparing Words") {
-//	auto word_with_punct = Word{PUNCTUATION + "hel" + PUNCTUATION + "lo" + PUNCTUATION};
-//	auto word_without_punct = Word{"hello"};
-//	CHECK(word_without_punct == word_with_punct);
-//}
+TEST_CASE("Punctuation is ignored when comparing Words") {
+	auto word_with_punct = Word{PUNCTUATION + "hel" + PUNCTUATION + "lo" + PUNCTUATION};
+	auto word_without_punct = Word{"hello"};
+	CHECK(word_without_punct == word_with_punct);
+}
 //
-//TEST_CASE("Word cannot consist solely of punctuation") {
-//	CHECK_THROWS_AS(Word{"!@#$%"}, WordContainsNoLetters);
-//}
+TEST_CASE("Word cannot consist solely of punctuation") {
+	CHECK_THROWS_AS(Word{"!@#$%"}, WordContainsNoLetters);
+}
 //
-//TEST_CASE("Word cannot contain a space") {
-//	CHECK_THROWS_AS(Word{"hello there"}, WordContainsSpace);
-//}
+TEST_CASE("Word cannot contain a space") {
+	CHECK_THROWS_AS(Word{"hello there"}, WordContainsSpace);
+}
 //
-//TEST_CASE("Word is queryable if greater than or equal to a specific size") {
-//	auto test_string = ""s;
-//	test_string.resize(MIN_SIZE_FOR_QUERY, 'a');
-//	auto test_word = Word{test_string};
-//	CHECK(test_word.isQueryable());
-//}
+TEST_CASE("Word is queryable if greater than or equal to a specific size") {
+	auto test_string = ""s;
+	test_string.resize(MIN_SIZE_FOR_QUERY, 'a');
+	auto test_word = Word{test_string};
+	CHECK(test_word.isQueryable());
+}
 //
-//TEST_CASE("Word is not queryable if less than a specific size") {
-//// Write this test...
-//}
+TEST_CASE("Word is not queryable if less than a specific size") {
+    auto test_string = ""s;
+	test_string.resize(SMALL_SIZE_FOR_QUERY, 'a');
+	auto test_word = Word{test_string};
+	CHECK_FALSE(test_word.isQueryable());
+}
 
 // ------------- Tests for Line ----------------
 //
