@@ -1,8 +1,8 @@
 #ifndef PARAGRAPH_H
 #define PARAGRAPH_H
-
 #include <vector>
 #include <tuple>
+#include <string>
 #include "Word.h"
 #include "Line.h"
 using namespace std;
@@ -20,7 +20,7 @@ public:
 	tuple<bool, vector<int>> contains(const Word& search_word) const;
 
 private:
-
+   vector<string> paragraph_ = {};
 };
 
 #endif
